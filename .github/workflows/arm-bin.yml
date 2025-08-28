@@ -13,13 +13,23 @@ jobs:
             - name: Install dependencies
               run: | # libusb seems to need libudev-dev too?
                 sudo apt-get update
-                sudo apt-get install -y git g++ cmake qtchooser pkgconfig qtcreator qtbase5-dev qt5-qmake libusb-1.0-0-dev libudev-dev
+                sudo apt-get install -y git g++ cmake qtchooser pkg-config qtcreator qtbase5-dev qt5-qmake libusb-1.0-0-dev libudev-dev
                 qmake -v
 
             - name: Build
               run: | # from; https://github.com/c0xc/CapacityTester?tab=readme-ov-file#build
                 qmake
                 make
+
+            - name: 'Upload Artifact'
+              uses: actions/upload-artifact@v3
+              with:
+                name: executable
+                path: | # taken from appimage.yml
+                  build.tar
+                  #bin/*
+                  #*.AppImage
+
 
 # missing libudev-dev results in:
 #
