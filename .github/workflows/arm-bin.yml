@@ -11,11 +11,9 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Install dependencies
-              run: | # libusb seems to need libudev-dev too?
+              run: | # libusb seems to need libudev-dev too? runner already has pkg-config, git, g++
                 sudo apt-get update
-                sudo apt-get install -y git g++ cmake qtchooser pkg-config qtcreator qttools5-dev-tools qtbase5-dev qt5-qmake libusb-1.0-0-dev libudev-dev
-                qmake -v
-
+                sudo apt-get install -y cmake qtchooser qtcreator qttools5-dev-tools qtbase5-dev qt5-qmake libusb-1.0-0-dev libudev-dev
             - name: Build
               run: | # from; https://github.com/c0xc/CapacityTester?tab=readme-ov-file#build
                 qmake
