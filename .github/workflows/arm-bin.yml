@@ -26,9 +26,7 @@ jobs:
               with:
                 name: executable
                 path: | # taken from appimage.yml
-                  build.tar
-                  #bin/*
-                  #*.AppImage
+                  bin/*
 
 
 # missing libudev-dev results in:
