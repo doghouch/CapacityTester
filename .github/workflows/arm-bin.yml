@@ -22,7 +22,7 @@ jobs:
                 make
 
             - name: 'Upload Artifact'
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                 name: executable
                 path: | # taken from appimage.yml
