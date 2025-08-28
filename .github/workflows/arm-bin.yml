@@ -1,0 +1,31 @@
+name: Build ARM bin for CapacityTester
+
+on:
+    workflow_dispatch: # no inputs, just set to manual trigger
+
+jobs:
+    build-arm:
+        runs-on: ubuntu-24.04-arm
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Install dependencies
+              run: | # libusb seems to need libudev-dev too?
+                sudo apt-get update
+                sudo apt-get install -y git g++ cmake qtchooser pkgconfig qtcreator qtbase5-dev qt5-qmake libusb-1.0-0-dev libudev-dev
+                qmake -v
+
+            - name: Build
+              run: | # from; https://github.com/c0xc/CapacityTester?tab=readme-ov-file#build
+                qmake
+                make
+
+# missing libudev-dev results in:
+#
+# In file included from inc/capacitytestergui.hpp:60,
+#                 from src/capacitytestergui.cpp:21:
+# inc/usbstoragedevice.hpp:34:10: fatal error: libudev.h: No such file or directory
+#   34 | #include <libudev.h>
+#      |          ^~~~~~~~~~~
+#
